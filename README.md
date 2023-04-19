@@ -20,5 +20,5 @@ Educational Goals:
 Future Extension:
 As a potential extension to this project, I plan to explore the possibility of training the model to segment and classify multiple handwritten digits drawn on a single canvas. This will involve additional challenges, such as image segmentation and multi-digit recognition, and will provide an opportunity for further learning and exploration in the field of machine learning.
 
+This project aligns with my interests in machine learning and web development and will allow me to apply the skills and knowledge acquired during Code Platoon. 
 
-This project aligns with my interests in machine learning and web development and will allow me to apply the skills and knowledge acquired during Code PLatoon. I am excited about the opportunity to work on a practical machine learning project and look forward to receiving feedback and guidance from my instructors.
