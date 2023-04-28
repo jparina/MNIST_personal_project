@@ -97,7 +97,7 @@ const DigitRecognizer = () => {
   const handleProcessImageClick = async () => {
     const tensor = getImageData();
     try {
-      const response = await axios.post("/predict/", { tensor });
+      const response = await axios.post("http://127.0.0.1:8000/api/predict_ff/", { tensor });
       const predictedNumber = response.data.predictedNumber;
       predictedNumberRef.current.textContent = predictedNumber;
     } catch (error) {
