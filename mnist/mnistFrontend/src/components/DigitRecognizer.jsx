@@ -97,7 +97,7 @@ const DigitRecognizer = () => {
   const handleProcessImageClick = async () => {
     const tensor = getImageData();
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/predict_ff/", { tensor });
+      const response = await axios.post("http://127.0.0.1:8000/api/predict_cnn/", { tensor });
       const predictedNumber = response.data.predictedNumber;
       predictedNumberRef.current.textContent = predictedNumber;
     } catch (error) {
@@ -114,6 +114,9 @@ const DigitRecognizer = () => {
 
   return (
     <div className="canvas-container">
+      <div className="header-container">
+        <h1>Digit Recognizer</h1>
+      </div>
       <div className="canvas">
         <canvas
           id="drawingCanvas"
@@ -137,7 +140,6 @@ const DigitRecognizer = () => {
           I predict this number is{' '}
           <span id="predictedNumber" ref={predictedNumberRef}></span>
         </div>
-        
       </div>
     </div>
   );
