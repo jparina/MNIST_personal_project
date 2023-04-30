@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { loginUser, registerUser } from "../auth";
 
-function LoginForm({ onLogin }) {
+function LoginForm({ onLogin, hideLoginForm }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
@@ -18,6 +18,7 @@ function LoginForm({ onLogin }) {
         userData = await loginUser(username, password);
       }
       onLogin(userData);
+      hideLoginForm();
     } catch (error) {
       setError(error.response.data.detail);
     }

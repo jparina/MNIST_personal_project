@@ -1,5 +1,6 @@
 import React from 'react';
 
+// The Background component is a functional component that renders a background video.
 function Background() {
   return (
     <>

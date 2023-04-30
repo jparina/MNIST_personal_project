@@ -1,5 +1,3 @@
-import jwtDecode from "jwt-decode";
-
 const API_BASE_URL = "http://localhost:8000"; 
 
 export async function loginUser(username, password) {
@@ -26,11 +24,7 @@ export async function registerUser(username, password) {
   }
 }
 
-export function isAuthenticated(token) {
-  try {
-    const decoded = jwtDecode(token);
-    return decoded && decoded.exp * 1000 > Date.now();
-  } catch (error) {
-    return false;
-  }
+export function isAuthenticated() {
+  const token = localStorage.getItem("token");
+  return token ? true : false;
 }

@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-function Navbar({ onLoginClick, onHamburgerClick, isLoggedIn, showDropdown }) {
+function Navbar({ onLoginClick, onHamburgerClick, isLoggedIn, showDropdown, onLogout, user }) {
   const toggleMenu = () => {
     onHamburgerClick();
   };
@@ -12,20 +11,27 @@ function Navbar({ onLoginClick, onHamburgerClick, isLoggedIn, showDropdown }) {
       <button className="hamburger" onClick={toggleMenu}>
         ☰
       </button>
-      <h1 className="navbar-title">MNIST Project</h1>
+      <Link to="/" className="navbar-title">MNIST Project</Link>
       <nav className="navbar-right">
-        {!isLoggedIn && (
+        {!isLoggedIn ? (
           <button onClick={onLoginClick} className="navbar-link login-link">
             Login
           </button>
-        )}
+        ) : (
+          <>
+            <span>Welcome, {user.username} </span>
+            <button onClick={onLogout} className="navbar-link logout-link">
+              Logout
+            </button>
+          </>
+      )}
       </nav>
       <div className={`dropdown${showDropdown ? " show-dropdown" : ""}`}>
-        <Link to="/sample-route-1" className="dropdown-link">
-          Sample Route 1
+        <Link to="/Digit-Recognizer" className="dropdown-link">
+          Digit Recognizer
         </Link>
         <Link to="/sample-route-2" className="dropdown-link">
-          Sample Route 2
+          Number Recognizer
         </Link>
       </div>
     </header>

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import datetime
 from dotenv import load_dotenv
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'image_classifier',
     'corsheaders',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +141,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
+
+SESSION_COOKIE_AGE = 3 * 60 * 60 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}

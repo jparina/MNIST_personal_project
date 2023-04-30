@@ -1,12 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 
-const DigitRecognizer = () => {
+const DigitRecognizer = ({ isLoggedIn, user }) => {
   const canvasRef = useRef(null);
   const predictedNumberRef = useRef(null);
-  const resizedCanvasContainerRef = useRef(null);
+  const [selectedApi, setSelectedApi] = useState('predict_ff');
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -95,9 +95,19 @@ const DigitRecognizer = () => {
   } 
 
   const handleProcessImageClick = async () => {
+    if (!isLoggedIn) {
+      alert("Please sign in to use this feature.");
+      return;
+    }
     const tensor = getImageData();
+    const apiEndpoint = `http://127.0.0.1:8000/api/${selectedApi}/`
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/predict_cnn/", { tensor });
+      const response = await axios.post(apiEndpoint, { tensor }, {
+        headers: {
+          'Authorization': `Token ${user.token}`, 
+        },
+      });
+      
       const predictedNumber = response.data.predictedNumber;
       predictedNumberRef.current.textContent = predictedNumber;
     } catch (error) {
@@ -114,8 +124,8 @@ const DigitRecognizer = () => {
 
   return (
     <div className="canvas-container">
-      <div className="header-container">
-        <h1>Digit Recognizer</h1>
+      <div className="title-container">
+        <h2>Digit Recognizer</h2>
       </div>
       <div className="canvas">
         <canvas
@@ -124,6 +134,14 @@ const DigitRecognizer = () => {
           height="280"
           ref={canvasRef}
         ></canvas>
+        <div>
+          <input type="radio" id="predict_ff" name="api" value="predict_ff" checked={selectedApi === 'predict_ff'} onChange={(e) => setSelectedApi(e.target.value)} />
+          <label htmlFor="predict_ff">Feed Forward</label>
+          <input type="radio" id="predict_cnn" name="api" value="predict_cnn" checked={selectedApi === 'predict_cnn'} onChange={(e) => setSelectedApi(e.target.value)} />
+          <label htmlFor="predict_cnn">CNN</label>
+          <input type="radio" id="predict_cnn2" name="api" value="predict_cnn2" checked={selectedApi === 'predict_cnn2'} onChange={(e) => setSelectedApi(e.target.value)} />
+          <label htmlFor="predict_cnn2">CNN v2</label>
+        </div>
         <button
           id="processImageButton"
           onClick={handleProcessImageClick}
